@@ -1,0 +1,34 @@
+<ion-header no-border>
+  <ion-toolbar mode='ios' fullscreen>
+    <ion-title color='primary'>
+      Signos
+    </ion-title>    
+    <ion-buttons slot='end'>
+        <ion-button (click)='clickPopover($event)'>
+          <ion-icon name="reorder"></ion-icon>
+        </ion-button>
+        </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+<div>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col  size="8" size-xs="6" size-sm="3" size-md="3" size-lg="3"  *ngFor='let image of imagemList' (click)='cliqSignos(image)'>    
+        <ion-card (click)='pegarDadosFirebase()'>      
+               <ion-img [src]="image.imagem"></ion-img>           
+               <span><b>{{image.nome}}</b> <br>{{image.data}}</span>        
+          </ion-card>
+        </ion-col>     
+    </ion-row>
+  </ion-grid>
+</div>
+<div>
+  <ul>
+    <li *ngFor='let item of list'>
+      {{item.conteudo}}
+    </li>
+  </ul>
+</div>
+</ion-content>
