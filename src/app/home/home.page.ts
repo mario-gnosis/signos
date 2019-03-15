@@ -5,8 +5,9 @@ import { DetailsSignos } from '../details/details_signos';
 import { PopoverPage } from '../pages/popover/popover.page';
 // tslint:disable-next-line:comment-format
 //import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireDatabase } from '@angular/fire/database';
-
+import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -18,8 +19,8 @@ export class HomePage {
   public imagemList: Array<Object> = [];
   value: any;
   signosDB: [];
-  public list = [];
-
+  itemsRef: AngularFireList<any>;
+  items: Observable<any[]>;
 
   constructor(
     public modalCtrl: ModalController,
@@ -29,6 +30,16 @@ export class HomePage {
     public db: AngularFireDatabase,
     public http: Http
   ) {
+    this.itemsRef = db.list('signos');
+    this.itemsRef.snapshotChanges()
+    .subscribe(actions => {
+      actions.forEach(action => {
+        console.log('Este é o nome: ', action.payload.key);
+        console.log('Algo', action.payload.val());
+
+      });
+    });
+
     this.imagemList = [
       {
         nome: 'Áries',
@@ -95,18 +106,6 @@ export class HomePage {
   }
   // tslint:disable-next-line:semicolon
   ionViewDidLoad() {
-    this.pegarDadosFirebase();
-  }
-  pegarDadosFirebase() {
-     this.http.get('https://signos-92423.firebaseio.com/signos.json')
-    //map(res => res.json())
-      .subscribe(signos => {
-        console.log(signos , 'Dados do Firebase');
-          if (signos ) {
-          this.list = Object.keys(signos ).map(i => signos [i]);
-        }
-      // tslint:disable-next-line:semicolon
-      })
   }
 
   async cliqSignos(imagemList) {

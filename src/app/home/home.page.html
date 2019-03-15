@@ -15,10 +15,10 @@
 <div>
   <ion-grid fixed>
     <ion-row>
-      <ion-col  size="8" size-xs="6" size-sm="3" size-md="3" size-lg="3"  *ngFor='let image of imagemList' (click)='cliqSignos(image)'>    
-        <ion-card (click)='pegarDadosFirebase()'>      
+      <ion-col  size="8" size-xs="6" size-sm="3" size-md="3" size-lg="3"  *ngFor='let image of imagemList, let data of itemsRef' (click)='cliqSignos(image)'>    
+        <ion-card>      
                <ion-img [src]="image.imagem"></ion-img>           
-               <span><b>{{image.nome}}</b> <br>{{image.data}}</span>        
+               <span><b>{{itemsRef.nome}}</b> <br>{{itemsRef.data}}</span>        
           </ion-card>
         </ion-col>     
     </ion-row>
