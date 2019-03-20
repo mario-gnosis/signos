@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      {{value.nome}}
+      {{value.name}}
     </ion-title>
     <ion-buttons slot='end'>
       <ion-button (click)='closeModal()'>
@@ -13,13 +13,27 @@
 
 <ion-content>
 
-  <ion-img [src]="value.imagem"></ion-img>
-
-    <h2>{{value.nome}}</h2>
+  <ion-img [src]="value.image"></ion-img>
+ 
     <h5>{{value.data}}</h5>
     <br>
     <p>{{value.conteudo}}</p>
-
+    <br>  
+    <h3>Defeitos</h3>
+    <p>{{value.defeitos}}</p>
+    <br>
+    <h3>{{value.name}} e o Amor</h3>
+    <p>{{value.noAmor}}</p>
+    <br>
+    <h3>Homem de {{value.name}}</h3>
+    <p>{{value.homem}}</p>
+    <br>
+    <h3>Mulher de {{value.name}}</h3>
+    <p>{{value.mulher}}</p>
+    <br>
+    <h3>{{value.name}} e os outros Signos</h3>
+    <p>{{value.demais}}</p>
+  
 
 
 </ion-content>
