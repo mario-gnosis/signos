@@ -17,22 +17,23 @@
  
     <h5>{{value.data}}</h5>
     <br>
-    <p>{{value.conteudo}}</p>
+    <div [innerHTML]='value.conteudo'></div>   
     <br>  
     <h3>Defeitos</h3>
-    <p>{{value.defeitos}}</p>
+    <div [innerHTML]='value.defeitos'></div> 
     <br>
     <h3>{{value.name}} e o Amor</h3>
-    <p>{{value.noAmor}}</p>
-    <br>
+    <div [innerHTML]='value.noAmor'></div>
+     <br>
     <h3>Homem de {{value.name}}</h3>
-    <p>{{value.homem}}</p>
+    <div [innerHTML]='value.homem'></div>
     <br>
     <h3>Mulher de {{value.name}}</h3>
-    <p>{{value.mulher}}</p>
+    <div [innerHTML]='value.mulher'></div> 
     <br>
     <h3>{{value.name}} e os outros Signos</h3>
-    <p>{{value.demais}}</p>
+    <div [innerHTML]='value.demais'></div> 
+
   
 
 

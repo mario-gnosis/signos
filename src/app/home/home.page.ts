@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController, NavController, ActionSheetController } from '@ionic/angular';
 import { DetailsSignos } from '../details/details_signos';
 import { PopoverPage } from '../pages/popover/popover.page';
+import { ToastController } from '@ionic/angular';
 import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
+import { Network } from '@ionic-native/network/ngx';
 
 
 
@@ -11,6 +13,9 @@ import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  providers: [
+    Network
+  ]
 })
 export class HomePage implements OnInit {
   public imagemList: Array<Object> = [];
@@ -18,7 +23,7 @@ export class HomePage implements OnInit {
   public signosDB: Array<Object> = [];
   value: any;
   items: any;
-  itemsRef: AngularFireList<any[]>;
+  itemsRef: AngularFireList<any>;
   nome: string;
 
   constructor(
@@ -27,13 +32,18 @@ export class HomePage implements OnInit {
     public navCtrl: NavController,
     public actionSheetController: ActionSheetController,
     public db: AngularFireDatabase,
-    public http: Http
+    public http: Http,
+    private network: Network,
+    public toastController: ToastController
   ) {
     this.signosDB = [];
-    }
-    async  getDados() {
-       this.itemsRef = this.db.list('/signos');
-      this.itemsRef.snapshotChanges()
+  }
+
+
+  getDados() {
+
+    this.itemsRef = this.db.list('/signos', ref => ref.orderByChild('order'));
+    this.itemsRef.snapshotChanges()
     .subscribe(actions => {
       actions.forEach(action => {
         this.imagemList.push({
@@ -51,8 +61,23 @@ export class HomePage implements OnInit {
     });
   }
   // tslint:disable-next-line:semicolon
-  ngOnInit() {
+  async ngOnInit() {
+    // tslint:disable-next-line:triple-equals
+    if ( this.network.type != this.network.Connection.NONE ) {
       this.items = this.getDados();
+     // console.log('CONECTADO ......');
+     return true;
+      } else {
+        const toast = await this.toastController.create({
+          message: 'Não há conexão com a internet.  Por favor, verifique a conexão e tente novamente',
+          showCloseButton: true,
+          position: 'middle',
+          color: 'danger',
+          closeButtonText: 'close'
+        });
+        toast.present();
+    }
+
   }
   async cliqSignos(imagemList) {
     const modal = await this.modalCtrl.create({
