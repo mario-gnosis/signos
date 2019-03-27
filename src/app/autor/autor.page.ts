@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 @Component({
   selector: 'app-autor',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutorPage implements OnInit {
 
-  constructor() { }
+  constructor(private androidFullScreen: AndroidFullScreen) { }
 
   ngOnInit() {
+    this.androidFullScreen.isImmersiveModeSupported()
+    .then(() => this.androidFullScreen.immersiveMode())
+    // tslint:disable-next-line:semicolon
+    .catch((error: any) => console.log('Erro na tela', error))
   }
 
 

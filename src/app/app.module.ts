@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { HttpModule } from '@angular/http';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 
 
@@ -26,6 +27,7 @@ import { HttpModule } from '@angular/http';
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
+    AndroidFullScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

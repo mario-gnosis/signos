@@ -4,9 +4,9 @@ import { ModalController, PopoverController, NavController, ActionSheetControlle
 import { DetailsSignos } from '../details/details_signos';
 import { PopoverPage } from '../pages/popover/popover.page';
 import { ToastController } from '@ionic/angular';
-import { AngularFireDatabase, AngularFireList  } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Network } from '@ionic-native/network/ngx';
-
+import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 
 @Component({
@@ -34,40 +34,46 @@ export class HomePage implements OnInit {
     public db: AngularFireDatabase,
     public http: Http,
     private network: Network,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private androidFullScreen: AndroidFullScreen
   ) {
-    this.signosDB = [];
+    this.androidFullScreen.isImmersiveModeSupported()
+    .then(() => this.androidFullScreen.immersiveMode())
+    .catch((error: any) => console.log('Erro na tela', error));
   }
 
 
   getDados() {
 
     this.itemsRef = this.db.list('/signos', ref => ref.orderByChild('order'));
-    this.itemsRef.snapshotChanges()
-    .subscribe(actions => {
-      actions.forEach(action => {
-        this.imagemList.push({
-          name: action.payload.val()['nome'],
-          data: action.payload.val()['data'],
-          conteudo: action.payload.val()['conteudo'],
-          defeitos: action.payload.val()['defeitos'],
-          noAmor: action.payload.val()['noAmor'],
-          homem: action.payload.val()['homem'],
-          mulher: action.payload.val()['mulher'],
-          demais: action.payload.val()['demais'],
-          image: './assets/img/' + action.payload.val()['image'],
+    setTimeout(() => {
+      this.itemsRef.snapshotChanges()
+      .subscribe(actions => {
+        actions.forEach(action => {
+          this.imagemList.push({
+            name: action.payload.val()['nome'],
+            data: action.payload.val()['data'],
+            conteudo: action.payload.val()['conteudo'],
+            defeitos: action.payload.val()['defeitos'],
+            noAmor: action.payload.val()['noAmor'],
+            homem: action.payload.val()['homem'],
+            mulher: action.payload.val()['mulher'],
+            demais: action.payload.val()['demais'],
+            image: './assets/img/' + action.payload.val()['image'],
           });
+        });
       });
-    });
+    }, 2000);
   }
+
   // tslint:disable-next-line:semicolon
   async ngOnInit() {
-    // tslint:disable-next-line:triple-equals
-    if ( this.network.type != this.network.Connection.NONE ) {
+
+     // tslint:disable-next-line:triple-equals
+     if ( this.network.type != this.network.Connection.NONE ) {
       this.items = this.getDados();
      // console.log('CONECTADO ......');
-     return true;
-      } else {
+       } else {
         const toast = await this.toastController.create({
           message: 'Não há conexão com a internet.  Por favor, verifique a conexão e tente novamente',
           showCloseButton: true,
@@ -77,8 +83,24 @@ export class HomePage implements OnInit {
         });
         toast.present();
     }
-
+ 
+    this.network.onConnect().subscribe(() => {
+      this.items = this.getDados();
+    // tslint:disable-next-line:semicolon
+    });
+    this.network.onDisconnect().subscribe(async () => {
+      const toast = await this.toastController.create({
+        message: 'Não há conexão com a internet.  Por favor, verifique a conexão e tente novamente',
+        showCloseButton: true,
+        position: 'middle',
+        color: 'danger',
+        closeButtonText: 'close'
+      });
+      toast.present();
+    // tslint:disable-next-line:no-trailing-whitespace
+    }); 
   }
+  
   async cliqSignos(imagemList) {
     const modal = await this.modalCtrl.create({
       component: DetailsSignos,
@@ -99,5 +121,5 @@ export class HomePage implements OnInit {
   }
 
 
-// tslint:disable-next-line:eofline
+  // tslint:disable-next-line:eofline
 }
