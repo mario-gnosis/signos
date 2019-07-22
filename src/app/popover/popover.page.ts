@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavController } from '@ionic/angular';
-import { InfoPage } from 'src/app/info/info.page';
-
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
 @Component({
   selector: 'app-popover',
@@ -13,6 +12,7 @@ export class PopoverPage implements OnInit {
   constructor(
     public popoverController: PopoverController,
     public navCtrl: NavController,
+    private youtube: YoutubeVideoPlayer,
     ) { }
 
   ngOnInit() {
@@ -23,7 +23,14 @@ export class PopoverPage implements OnInit {
   autor() {
     this.navCtrl.navigateForward('autor');
   }
+  museo() {
+    console.log('clicado em museo');
+    window.open('https://www.johfra.nl/index.php?lang=NL', '_system');
+  }
 close() {
   this.popoverController.dismiss();
+}
+watch(watch) {
+  this.youtube.openVideo(watch);
 }
 }

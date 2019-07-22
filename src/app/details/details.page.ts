@@ -1,29 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
-  selector: 'app-details_signos',
-  templateUrl: 'details_signos.html',
-  styleUrls: ['details_signos.scss']
+  selector: 'app-details',
+  templateUrl: './details.page.html',
+  styleUrls: ['./details.page.scss'],
 })
+// tslint:disable-next-line: component-class-suffix
 export class DetailsSignos implements OnInit {
-
   @Input() value: any;
   constructor(
     public modalController: ModalController,
     public navParams: NavParams,
     private androidFullScreen: AndroidFullScreen) {
-     this.value = this.navParams; }
-  async closeModal() {
-    await this.modalController.dismiss();
-  }
-  ngOnInit() {
+     this.value = this.navParams;
+    }
+   ngOnInit() {
     this.androidFullScreen.isImmersiveModeSupported()
     // tslint:disable-next-line:semicolon
     .then(() => this.androidFullScreen.immersiveMode())
     .catch((error: any) => console.log('Erro na tela', error));
   }
-
-// tslint:disable-next-line:eofline
+  closeModal() {
+    this.modalController.dismiss();
+   }
 }

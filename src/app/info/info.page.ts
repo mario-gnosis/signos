@@ -9,7 +9,6 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 })
 export class InfoPage implements OnInit {
 
-
   constructor( public popover: PopoverController, private androidFullScreen: AndroidFullScreen) { }
 
   ngOnInit() {
@@ -18,4 +17,5 @@ export class InfoPage implements OnInit {
     // tslint:disable-next-line:semicolon
     .catch((error: any) => console.log('Erro na tela', error))
   }
+
 }
