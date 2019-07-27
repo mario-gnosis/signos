@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
+    "@ionic-native/admob-free": "^5.10.0",
     "@ionic-native/android-full-screen": "^5.10.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/network": "^5.10.0",
@@ -29,8 +30,10 @@
     "@ionic-native/youtube-video-player": "^5.10.0",
     "@ionic/angular": "^4.1.0",
     "cordova-android": "^8.0.0",
+    "cordova-plugin-admob-free": "^0.27.0",
     "cordova-plugin-fullscreen": "^1.2.0",
     "cordova-plugin-network-information": "^2.0.2",
+    "cordova-plugin-youtube-video-player": "^2.3.0",
     "core-js": "^2.5.4",
     "firebase": "^6.3.1",
     "rxjs": "~6.5.1",
@@ -81,7 +84,8 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-fullscreen": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-youtube-video-player": {}
     },
     "platforms": [
       "android"
