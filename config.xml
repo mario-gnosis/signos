@@ -20,6 +20,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="12000" />
     <preference name="loadUrlTimeoutValue" value="13000" />
+    <preference name="YouTubeDataApiKey" value="AIzaSyCC-LcMN0FypbHKzI0Y1z-_51_qITzSFkY" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
@@ -103,5 +104,4 @@
     <plugin name="cordova-plugin-youtube-video-player" spec="^2.3.0" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
-
 </widget>
