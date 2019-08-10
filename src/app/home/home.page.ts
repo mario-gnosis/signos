@@ -1,19 +1,19 @@
 import { Http } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, NavController, ActionSheetController } from '@ionic/angular';
+import { ModalController, PopoverController, NavController, ActionSheetController, Platform } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Network } from '@ionic-native/network/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { PopoverPage } from '../popover/popover.page';
 import { DetailsSignos } from '../details/details.page';
-
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  providers: [Network
+  providers: [Network, AdMobFree
   ]
 })
 export class HomePage implements OnInit {
@@ -36,13 +36,31 @@ export class HomePage implements OnInit {
     public http: Http,
     private network: Network,
     public toastController: ToastController,
-    private androidFullScreen: AndroidFullScreen
+    private androidFullScreen: AndroidFullScreen,
+    private admobFree: AdMobFree,
+    private platform: Platform
   ) {
     this.androidFullScreen.isImmersiveModeSupported()
     .then(() => this.androidFullScreen.immersiveMode())
     .catch((error: any) => console.log('Erro na tela ao gerar o FullScreem', error));
+
+
   }
 
+ionViewDidLoad() {
+  if (this.platform.is('cordova')) {
+  const bannerConfig: AdMobFreeBannerConfig = {
+    isTesting: false,
+    autoShow: true,
+    id: 'ca-app-pub-7309361810799562/3518522859'
+  };
+  this.admobFree.banner.config(bannerConfig);
+
+  this.admobFree.banner.prepare().then(() => {
+    // success
+  }).catch(e => alert('Erro ao gerar o banner' + e));
+}
+}
 
   getDados() {
 
