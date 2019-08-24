@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ModalController, NavParams } from '@ionic/angular';
+import { AdmobFreeService } from '../service/admobfree.service';
 
 @Component({
   selector: 'app-details',
@@ -10,12 +11,20 @@ import { ModalController, NavParams } from '@ionic/angular';
 // tslint:disable-next-line: component-class-suffix
 export class DetailsSignos implements OnInit {
   @Input() value: any;
+  contentLoaded = false;
   constructor(
     public modalController: ModalController,
     public navParams: NavParams,
+    private admobFreeService: AdmobFreeService,
     private androidFullScreen: AndroidFullScreen) {
      this.value = this.navParams;
+
+     setTimeout(() => {
+      this.contentLoaded = true;
+      this.admobFreeService.InterstitialAd();
+       }, 5000);
     }
+
    ngOnInit() {
     this.androidFullScreen.isImmersiveModeSupported()
     // tslint:disable-next-line:semicolon

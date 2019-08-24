@@ -1,19 +1,21 @@
 import { Http } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, NavController, ActionSheetController, Platform } from '@ionic/angular';
+import { ModalController, PopoverController, NavController, ActionSheetController, Platform} from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Network } from '@ionic-native/network/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { PopoverPage } from '../popover/popover.page';
 import { DetailsSignos } from '../details/details.page';
+// tslint:disable-next-line: comment-format
 import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
+import { AdmobFreeService } from '../service/admobfree.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  providers: [Network, AdMobFree
+  providers: [Network, // AdMobFree
   ]
 })
 export class HomePage implements OnInit {
@@ -25,6 +27,7 @@ export class HomePage implements OnInit {
   items: any;
   itemsRef: AngularFireList<any>;
   nome: string;
+  contentLoaded = false;
 
   constructor(
     public modalCtrl: ModalController,
@@ -37,6 +40,7 @@ export class HomePage implements OnInit {
     private network: Network,
     public toastController: ToastController,
     private androidFullScreen: AndroidFullScreen,
+    private admobFreeService: AdmobFreeService,
     private admobFree: AdMobFree,
     private platform: Platform
   ) {
@@ -44,23 +48,25 @@ export class HomePage implements OnInit {
     .then(() => this.androidFullScreen.immersiveMode())
     .catch((error: any) => console.log('Erro na tela ao gerar o FullScreem', error));
 
+    const bannerConfig: AdMobFreeBannerConfig = {
+      isTesting: false,
+      autoShow: true,
+      id: 'ca-app-pub-7309361810799562/7616738206'
+    };
+    this.admobFree.banner.config(bannerConfig);
+
+    this.admobFree.banner.prepare().then(() => {
+      // success
+    }).catch(e => alert('Erro ao gerar o banner: ' + e));
 
   }
 
-ionViewDidLoad() {
-  if (this.platform.is('cordova')) {
-  const bannerConfig: AdMobFreeBannerConfig = {
-    isTesting: false,
-    autoShow: true,
-    id: 'ca-app-pub-7309361810799562/3518522859'
-  };
-  this.admobFree.banner.config(bannerConfig);
+  ionViewWillEnter() {
+    setTimeout(() => {
+   this.contentLoaded = true;
+    }, 5000);
+  }
 
-  this.admobFree.banner.prepare().then(() => {
-    // success
-  }).catch(e => alert('Erro ao gerar o banner' + e));
-}
-}
 
   getDados() {
 
@@ -118,13 +124,17 @@ ionViewDidLoad() {
     // tslint:disable-next-line:no-trailing-whitespace
     }); 
   }
+
   async cliqSignos(imagemList: any) {
+
     const modal = await this.modalCtrl.create({
       component: DetailsSignos,
       mode: 'ios',
       componentProps: { value: imagemList }
     });
+    this.admobFreeService.InterstitialAd();
     return await modal.present();
+
   }
 
   async clickPopover(event) {

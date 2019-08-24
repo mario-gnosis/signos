@@ -12,7 +12,7 @@ export class PopoverPage implements OnInit {
   constructor(
     public popoverController: PopoverController,
     public navCtrl: NavController,
-    private youtube: YoutubeVideoPlayer,
+    private youtube: YoutubeVideoPlayer
     ) { }
 
   ngOnInit() {
@@ -24,7 +24,6 @@ export class PopoverPage implements OnInit {
     this.navCtrl.navigateForward('autor');
   }
   museo() {
-    console.log('clicado em museo');
     window.open('https://www.johfra.nl/index.php?lang=NL', '_system');
   }
 close() {

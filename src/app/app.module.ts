@@ -13,6 +13,8 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { HttpModule } from '@angular/http';
 import { environment } from 'src/environments/environment';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
+import { AdmobFreeService } from './service/admobfree.service';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,9 +28,11 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
   providers: [
     StatusBar,
     SplashScreen,
+    AdMobFree,
     AngularFireDatabase,
     AndroidFullScreen,
     YoutubeVideoPlayer,
+    AdmobFreeService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
