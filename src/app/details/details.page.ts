@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ModalController, NavParams } from '@ionic/angular';
 import { AdmobFreeService } from '../service/admobfree.service';
+// tslint:disable-next-line: comment-format
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
+
 
 @Component({
   selector: 'app-details',
@@ -15,8 +18,9 @@ export class DetailsSignos implements OnInit {
   constructor(
     public modalController: ModalController,
     public navParams: NavParams,
+    private androidFullScreen: AndroidFullScreen,
     private admobFreeService: AdmobFreeService,
-    private androidFullScreen: AndroidFullScreen) {
+  ) {
      this.value = this.navParams;
 
      setTimeout(() => {
@@ -25,11 +29,13 @@ export class DetailsSignos implements OnInit {
        }, 5000);
     }
 
-   ngOnInit() {
+   async ngOnInit() {
     this.androidFullScreen.isImmersiveModeSupported()
     // tslint:disable-next-line:semicolon
     .then(() => this.androidFullScreen.immersiveMode())
     .catch((error: any) => console.log('Erro na tela', error));
+
+    this.admobFreeService.InterstitialAd();
   }
   closeModal() {
     this.modalController.dismiss();

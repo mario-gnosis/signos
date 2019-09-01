@@ -7,9 +7,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { PopoverPage } from '../popover/popover.page';
 import { DetailsSignos } from '../details/details.page';
-// tslint:disable-next-line: comment-format
-import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free/ngx';
-import { AdmobFreeService } from '../service/admobfree.service';
+
 
 @Component({
   selector: 'app-home',
@@ -40,24 +38,10 @@ export class HomePage implements OnInit {
     private network: Network,
     public toastController: ToastController,
     private androidFullScreen: AndroidFullScreen,
-    private admobFreeService: AdmobFreeService,
-    private admobFree: AdMobFree,
-    private platform: Platform
   ) {
     this.androidFullScreen.isImmersiveModeSupported()
     .then(() => this.androidFullScreen.immersiveMode())
     .catch((error: any) => console.log('Erro na tela ao gerar o FullScreem', error));
-
-    const bannerConfig: AdMobFreeBannerConfig = {
-      isTesting: false,
-      autoShow: true,
-      id: 'ca-app-pub-7309361810799562/7616738206'
-    };
-    this.admobFree.banner.config(bannerConfig);
-
-    this.admobFree.banner.prepare().then(() => {
-      // success
-    }).catch(e => alert('Erro ao gerar o banner: ' + e));
 
   }
 
@@ -132,7 +116,6 @@ export class HomePage implements OnInit {
       mode: 'ios',
       componentProps: { value: imagemList }
     });
-    this.admobFreeService.InterstitialAd();
     return await modal.present();
 
   }
