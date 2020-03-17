@@ -6,15 +6,13 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Network } from '@ionic-native/network/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { PopoverPage } from '../popover/popover.page';
-import { DetailsSignos } from '../details/details.page';
-
+import { DetailsPage } from '../details/details.page';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  providers: [Network, // AdMobFree
-  ]
+  providers: [Network]
 })
 export class HomePage implements OnInit {
   // tslint:disable-next-line: ban-types
@@ -110,9 +108,9 @@ export class HomePage implements OnInit {
   }
 
   async cliqSignos(imagemList: any) {
-
+    console.log('Clicado em imagem');
     const modal = await this.modalCtrl.create({
-      component: DetailsSignos,
+      component: DetailsPage,
       mode: 'ios',
       componentProps: { value: imagemList }
     });

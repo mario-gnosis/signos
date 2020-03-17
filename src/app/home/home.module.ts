@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { PopoverPage } from '../popover/popover.page';
-import { DetailsSignos } from '../details/details.page';
+import { DetailsPage } from '../details/details.page';
+
+
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import { DetailsSignos } from '../details/details.page';
       }
     ])
   ],
-  declarations: [HomePage, DetailsSignos, PopoverPage],
-  entryComponents: [DetailsSignos, PopoverPage]
+  declarations: [HomePage, DetailsPage, PopoverPage],
+  entryComponents: [DetailsPage, PopoverPage]
 })
 export class HomePageModule {}

@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ModalController, NavParams } from '@ionic/angular';
 import { AdmobFreeService } from '../service/admobfree.service';
-// tslint:disable-next-line: comment-format
-import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 
 @Component({
@@ -12,7 +10,7 @@ import { AdMobFree } from '@ionic-native/admob-free/ngx';
   styleUrls: ['./details.page.scss'],
 })
 // tslint:disable-next-line: component-class-suffix
-export class DetailsSignos implements OnInit {
+export class DetailsPage implements OnInit {
   @Input() value: any;
   contentLoaded = false;
   constructor(
